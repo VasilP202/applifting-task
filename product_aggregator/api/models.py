@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 
 from django.db import models
 
@@ -10,4 +10,4 @@ class AccessToken(models.Model):
 
     @property
     def is_expired(self):
-        return datetime.now() > self.expiration
+        return timezone.now() > self.expiration

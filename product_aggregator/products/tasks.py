@@ -1,6 +1,7 @@
 import uuid
 
 from api.use_cases.applifting import get_product_offers
+
 from product_aggregator.celery import app
 
 from .models import Product

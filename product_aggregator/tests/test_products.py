@@ -2,9 +2,8 @@ import json
 
 from django.test import TestCase
 from model_bakery import baker
-from rest_framework.test import APIClient
-
 from products.models import Product
+from rest_framework.test import APIClient
 
 
 class TestProducts(TestCase):

@@ -2,10 +2,9 @@ import json
 from datetime import datetime, timedelta
 
 import requests
-from django.conf import settings
-
 from api.exceptions import ObtainAccessTokenError
 from api.models import AccessToken
+from django.conf import settings
 
 
 def get_access_token() -> str:

@@ -2,9 +2,8 @@ import json
 from typing import Optional
 
 import requests
-from django.conf import settings
-
 from api.exceptions import ProductRegistrationError
+from django.conf import settings
 from products.models import Product
 
 from .auth import get_access_token

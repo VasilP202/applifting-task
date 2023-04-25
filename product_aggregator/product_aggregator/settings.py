@@ -9,18 +9,26 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+SECRET_KEY = env.str("SECRET_KEY")
+APPLIFTING_API_REFRESH_TOKEN = env.str("APPLIFTING_API_REFRESH_TOKEN")
+APPLIFTING_API_BASE_URL = env.str(
+    "APPLIFTING_API_BASE_URL", default="https://python.exercise.applifting.cz/api/v1/"
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-6xdm7pxjyg@l(1*qtqhv((3leuhsib!f)t43oa3um5vaud&&z5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,4 +133,15 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-APPLIFTING_API_REFRESH_TOKEN = "b1df627f-1e1e-4c0c-bfca-a2c0476d0a86"
+
+CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = env.str(
+    "CELERY_RESULT_BACKEND", default="redis://localhost:6379/0"
+)
+
+CELERY_BEAT_SCHEDULE = {  # Scheduler configuration
+    "update_product_offers": {
+        "task": "products.tasks.update_product_offers",
+        "schedule": 60,
+    },
+}

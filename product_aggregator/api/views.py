@@ -1,12 +1,11 @@
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from products.models import Offer, Product
+from products.models import Product
 
 from .serializers import OfferSerializer, ProductSerializer
-from .use_cases import register_product
+from .use_cases.applifting import register_product
 
 
 @api_view(["GET", "POST"])
